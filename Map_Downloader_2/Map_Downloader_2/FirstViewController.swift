@@ -44,6 +44,7 @@ class FirstViewController: UIViewController, XMLParserDelegate {
     var continent = String()
     var end = true
     var parentName = String()
+    var parentsArray:[String] = [""]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,9 +61,18 @@ class FirstViewController: UIViewController, XMLParserDelegate {
 
         if let name = attributeDict["name"] {
             countryName = name
-            if end == true {
-                parentName = name
+            if level >= 2 {
+                parentsArray[level - 1] = name
+                parentsArray.append("")
+                parentName = parentsArray[level - 2]
+            } else {
+                parentsArray[level - 1] = "europe"
+                parentsArray.append("")
+                parentName = "tytyty"
             }
+//            if end == true {
+//                parentName = name
+//            }
             let first = name.startIndex
             let rest = String(name.dropFirst())
             countryLink = name[first...first].uppercased() + rest
@@ -108,14 +118,14 @@ class FirstViewController: UIViewController, XMLParserDelegate {
     }
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         if elementName == "region" {
-            //level += 1
+            level += 1
             parse_region(attributeDict: attributeDict)
         }
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         if elementName == "region" {
-            //level -= 1
+            level -= 1
             end = true
         }
     }
