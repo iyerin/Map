@@ -1,21 +1,19 @@
 //
-//  ViewController.swift
+//  SubregionsVC.swift
 //  Map_Downloader_2
 //
-//  Created by Ihor YERIN on 11/8/19.
+//  Created by Ihor YERIN on 11/9/19.
 //  Copyright © 2019 Ihor YERIN. All rights reserved.
 //
 
 import UIKit
 
-
-
-class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SubregionsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var regions: [Region] = []
     var index = Int()
     private var myTableView: UITableView!
     var newRegions: [Region] = []
-    
+
     // MARK: - TableView
     
     func indexOf(regions: [Region], name: String) -> Int {
@@ -45,7 +43,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - My functions
     
     func showSubregions(regions: [Region], index: Int) {
-        let subregionsVC = FirstViewController()
+        let subregionsVC = SubregionsVC()
         subregionsVC.regions = regions
         subregionsVC.index = index
         self.navigationController?.pushViewController(subregionsVC, animated:true)
@@ -55,21 +53,15 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       // regions = myparser.myparser() ---    to appdelegate
-//        for region in regions {
-//            print (region.name, region.parent)
-//        }
-        newRegions = regions.filter { $0.parent == regions[index].name }
         let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
         
+        newRegions = regions.filter { $0.parent == regions[index].name }
         myTableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight))
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         myTableView.dataSource = self
         myTableView.delegate = self
         self.view.addSubview(myTableView)
     }
-
 }
-
