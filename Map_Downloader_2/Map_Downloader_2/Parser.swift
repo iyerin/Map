@@ -101,6 +101,6 @@ class Parser: NSObject, XMLParserDelegate {
                 parser.parse()
             }
         }
-        return(regions)
+        return regions//.sorted { $0.name < $1.name }
     }
 }

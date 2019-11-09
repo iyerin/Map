@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		091F22A3237714C200459D0A /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F22A2237714C200459D0A /* Parser.swift */; };
-		098AEC042377245E0027F6F9 /* SubregionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098AEC032377245E0027F6F9 /* SubregionsVC.swift */; };
 		098AEC06237739B00027F6F9 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098AEC05237739B00027F6F9 /* Region.swift */; };
+		098AEC0923773FC40027F6F9 /* RegionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098AEC0723773FC40027F6F9 /* RegionsTableViewCell.swift */; };
+		098AEC0A23773FC40027F6F9 /* RegionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 098AEC0823773FC40027F6F9 /* RegionsTableViewCell.xib */; };
 		09A6658C2375B48A0053E554 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6658B2375B48A0053E554 /* AppDelegate.swift */; };
 		09A6658E2375B48A0053E554 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6658D2375B48A0053E554 /* FirstViewController.swift */; };
 		09A665912375B48A0053E554 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09A6658F2375B48A0053E554 /* Main.storyboard */; };
@@ -20,8 +21,9 @@
 
 /* Begin PBXFileReference section */
 		091F22A2237714C200459D0A /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
-		098AEC032377245E0027F6F9 /* SubregionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubregionsVC.swift; sourceTree = "<group>"; };
 		098AEC05237739B00027F6F9 /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
+		098AEC0723773FC40027F6F9 /* RegionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionsTableViewCell.swift; sourceTree = "<group>"; };
+		098AEC0823773FC40027F6F9 /* RegionsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegionsTableViewCell.xib; sourceTree = "<group>"; };
 		09A665882375B48A0053E554 /* Map_Downloader_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Map_Downloader_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09A6658B2375B48A0053E554 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09A6658D2375B48A0053E554 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -64,8 +66,9 @@
 			children = (
 				09A6658B2375B48A0053E554 /* AppDelegate.swift */,
 				091F22A2237714C200459D0A /* Parser.swift */,
+				098AEC0723773FC40027F6F9 /* RegionsTableViewCell.swift */,
+				098AEC0823773FC40027F6F9 /* RegionsTableViewCell.xib */,
 				09A6658D2375B48A0053E554 /* FirstViewController.swift */,
-				098AEC032377245E0027F6F9 /* SubregionsVC.swift */,
 				09A6658F2375B48A0053E554 /* Main.storyboard */,
 				09A6659D2375B97B0053E554 /* regions.xml */,
 				09A665922375B48A0053E554 /* Assets.xcassets */,
@@ -136,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09A665962375B48A0053E554 /* LaunchScreen.storyboard in Resources */,
+				098AEC0A23773FC40027F6F9 /* RegionsTableViewCell.xib in Resources */,
 				09A6659E2375B97B0053E554 /* regions.xml in Resources */,
 				09A665932375B48A0053E554 /* Assets.xcassets in Resources */,
 				09A665912375B48A0053E554 /* Main.storyboard in Resources */,
@@ -153,7 +157,7 @@
 				09A6658C2375B48A0053E554 /* AppDelegate.swift in Sources */,
 				091F22A3237714C200459D0A /* Parser.swift in Sources */,
 				098AEC06237739B00027F6F9 /* Region.swift in Sources */,
-				098AEC042377245E0027F6F9 /* SubregionsVC.swift in Sources */,
+				098AEC0923773FC40027F6F9 /* RegionsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
