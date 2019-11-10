@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		091F22A3237714C200459D0A /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F22A2237714C200459D0A /* Parser.swift */; };
+		0932C48E2378720E00AB53B5 /* MapsFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0932C48D2378720E00AB53B5 /* MapsFileManager.swift */; };
+		0932C4902378824200AB53B5 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0932C48F2378824200AB53B5 /* DownloadManager.swift */; };
 		098AEC06237739B00027F6F9 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098AEC05237739B00027F6F9 /* Region.swift */; };
 		098AEC0923773FC40027F6F9 /* RegionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098AEC0723773FC40027F6F9 /* RegionsTableViewCell.swift */; };
 		098AEC0A23773FC40027F6F9 /* RegionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 098AEC0823773FC40027F6F9 /* RegionsTableViewCell.xib */; };
@@ -21,6 +23,8 @@
 
 /* Begin PBXFileReference section */
 		091F22A2237714C200459D0A /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		0932C48D2378720E00AB53B5 /* MapsFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsFileManager.swift; sourceTree = "<group>"; };
+		0932C48F2378824200AB53B5 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		098AEC05237739B00027F6F9 /* Region.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		098AEC0723773FC40027F6F9 /* RegionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionsTableViewCell.swift; sourceTree = "<group>"; };
 		098AEC0823773FC40027F6F9 /* RegionsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegionsTableViewCell.xib; sourceTree = "<group>"; };
@@ -64,17 +68,19 @@
 		09A6658A2375B48A0053E554 /* Map_Downloader_2 */ = {
 			isa = PBXGroup;
 			children = (
+				098AEC05237739B00027F6F9 /* Region.swift */,
 				09A6658B2375B48A0053E554 /* AppDelegate.swift */,
 				091F22A2237714C200459D0A /* Parser.swift */,
+				09A6658D2375B48A0053E554 /* FirstViewController.swift */,
+				0932C48F2378824200AB53B5 /* DownloadManager.swift */,
 				098AEC0723773FC40027F6F9 /* RegionsTableViewCell.swift */,
 				098AEC0823773FC40027F6F9 /* RegionsTableViewCell.xib */,
-				09A6658D2375B48A0053E554 /* FirstViewController.swift */,
+				0932C48D2378720E00AB53B5 /* MapsFileManager.swift */,
 				09A6658F2375B48A0053E554 /* Main.storyboard */,
 				09A6659D2375B97B0053E554 /* regions.xml */,
 				09A665922375B48A0053E554 /* Assets.xcassets */,
 				09A665942375B48A0053E554 /* LaunchScreen.storyboard */,
 				09A665972375B48A0053E554 /* Info.plist */,
-				098AEC05237739B00027F6F9 /* Region.swift */,
 			);
 			path = Map_Downloader_2;
 			sourceTree = "<group>";
@@ -155,9 +161,11 @@
 			files = (
 				09A6658E2375B48A0053E554 /* FirstViewController.swift in Sources */,
 				09A6658C2375B48A0053E554 /* AppDelegate.swift in Sources */,
+				0932C4902378824200AB53B5 /* DownloadManager.swift in Sources */,
 				091F22A3237714C200459D0A /* Parser.swift in Sources */,
 				098AEC06237739B00027F6F9 /* Region.swift in Sources */,
 				098AEC0923773FC40027F6F9 /* RegionsTableViewCell.swift in Sources */,
+				0932C48E2378720E00AB53B5 /* MapsFileManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

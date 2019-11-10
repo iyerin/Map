@@ -15,5 +15,35 @@ class RegionsTableViewCell: UITableViewCell {
     @IBOutlet weak var progress: UIProgressView!
     @IBOutlet weak var download: UIImageView!
     
+    var downloadOperation: DownloadOperation?  {
+        didSet {
+            if let _ = downloadOperation {
+                setOperationCallbacks()
+            }
+        }
+    }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        mapImage.image = UIImage(named: "ic_custom_show_on_map")
+        isUserInteractionEnabled = true
+        contentView.alpha = 1
+    }
+    
+    private func setOperationCallbacks() {
+        downloadOperation?.progressCallback = { [weak self] progress in
+            DispatchQueue.main.async {
+                self?.progress.isHidden = false
+                self?.progress.progress = progress
+            }
+        }
+        downloadOperation?.didFinishDownloadCallback = { [weak self] in
+            DispatchQueue.main.async {
+                self?.mapImage.image = UIImage(named: "green_map")
+                self?.progress.isHidden = true
+                self?.isUserInteractionEnabled = false
+                self?.contentView.alpha = 0.5
+            }
+        }
+    }
 }

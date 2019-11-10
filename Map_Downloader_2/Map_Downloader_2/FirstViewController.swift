@@ -8,19 +8,37 @@
 
 import UIKit
 
+/*
+ TODO:
+ -  - gb if < 0
+ - okruglenie free space
 
+ - google callback
+ - map where no maps
+ */
 
 class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var regions: [Region] = []
     var index = Int()
     private var myTableView: UITableView!
     var newRegions: [Region] = []
+    var cell: RegionsTableViewCell?
+    let downloadManager = DownloadManager()
     
     // MARK: - TableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let index = regions.index(of: newRegions[indexPath.row]) else { return }
-        showSubregions(regions: regions, index: index)
+        if hasSubregions(regions: regions, name: newRegions[indexPath.row].name) {
+            guard let index = regions.index(of: newRegions[indexPath.row]) else { return }
+            showSubregions(regions: regions, index: index)
+        } else {
+            self.cell = self.myTableView.cellForRow(at: indexPath) as? RegionsTableViewCell
+            guard let url = URL(string: newRegions[indexPath.row].link) else { return }
+            let operation = downloadManager.queueDownload(url)
+            cell?.downloadOperation = operation
+
+            //download(region: newRegions[indexPath.row])
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -32,12 +50,20 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //let cell = tableView.dequeueReusableCell(withIdentifier: "RegionsTableViewCell", for: indexPath as IndexPath)
         cell.regionName.text = newRegions[indexPath.row].name
         cell.mapImage.image = UIImage(named: "ic_custom_show_on_map")
-        if hasSubregions(regions: regions, parent: newRegions[indexPath.row].parent) {
+        cell.progress.isHidden = true
+        cell.selectionStyle = .none
+        
+        if hasSubregions(regions: regions, name: newRegions[indexPath.row].name) {
             cell.download.image = UIImage(named: "right_arrow")
         } else {
             cell.download.image = UIImage(named: "ic_custom_import")
         }
-        //cell.textLabel!.text = newRegions[indexPath.row].name
+        if MapsFileManager.isDownloaded(link: regions[regions.index(of: newRegions[indexPath.row])!].link) {
+            cell.mapImage.image = UIImage(named: "green_map")
+            cell.isUserInteractionEnabled = false
+            cell.contentView.alpha = 0.5
+            //image:grey
+        }
         return cell
     }
     
@@ -50,8 +76,8 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.navigationController?.pushViewController(subregionsVC, animated:true)
     }
     
-    func hasSubregions(regions: [Region], parent: String) -> Bool {
-        let filteredRegions = regions.filter {$0.name == parent}
+    func hasSubregions(regions: [Region], name: String) -> Bool {
+        let filteredRegions = regions.filter {$0.parent == name}
         if filteredRegions.isEmpty == true {
             return false
         }
@@ -78,7 +104,71 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         myTableView.delegate = self
         myTableView.tableFooterView = UIView()
         self.view.addSubview(myTableView)
+        
+//        storageView = UIView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: 50))
+//        leftLabel = UILabel(frame: <#T##CGRect#>)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        myTableView.reloadData()
+    }
+}
 
+    // MARK: - Download
+
+extension FirstViewController: URLSessionDownloadDelegate {
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        guard let url = downloadTask.originalRequest?.url else { return }
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        print(documentsPath)
+        let str:String = url.absoluteString
+        var startIndex = str.index(of: ":")!
+        let upperCase = CharacterSet.uppercaseLetters
+        for currentCharacter in str.unicodeScalars {
+            if upperCase.contains(currentCharacter) {
+                startIndex = str.index(of: Character(currentCharacter))!
+                break
+            }
+        }
+        let name = String(str[startIndex...])
+        let destinationURL = documentsPath.appendingPathComponent(name)
+        try? FileManager.default.removeItem(at: destinationURL)
+        do {
+            try FileManager.default.copyItem(at: location, to: destinationURL)
+        } catch let error {
+            print("Copy Error: \(error.localizedDescription)")
+        }
+        DispatchQueue.main.async() {
+//            var i = 0
+//            for country in self.countries {
+//                if country.name == self.countryCell?.countryName.text {
+//                    break
+//                }
+//                i += 1
+//            }
+//            self.countries[i].downloaded = true
+            self.cell?.progress.isHidden = true
+            self.myTableView.reloadData()
+        }
+    }
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        let progress = Float(totalBytesWritten)/Float(totalBytesExpectedToWrite)
+        DispatchQueue.main.async() {
+            self.cell?.progress.progress = progress
+        }
+    }
+    
+    func download(region: Region) {
+        guard let url = URL(string: region.link) else { return }
+        let urlSession = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        let task = urlSession.downloadTask(with: url)
+        task.resume()
+        
+        cell?.progress.progress = 0
+        cell?.progress.isHidden = false
+    }
 }
 
