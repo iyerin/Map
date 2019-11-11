@@ -28,6 +28,7 @@ class RegionsTableViewCell: UITableViewCell {
         mapImage.image = UIImage(named: "ic_custom_show_on_map")
         isUserInteractionEnabled = true
         contentView.alpha = 1
+        //download.image = UIImage(named: "ic_custom_import")
     }
     
     private func setOperationCallbacks() {
@@ -42,7 +43,7 @@ class RegionsTableViewCell: UITableViewCell {
                 self?.mapImage.image = UIImage(named: "green_map")
                 self?.progress.isHidden = true
                 self?.isUserInteractionEnabled = false
-                self?.contentView.alpha = 0.5
+                self?.download.image = UIImage()
             }
         }
     }

@@ -204,7 +204,7 @@ extension DownloadOperation: URLSessionDownloadDelegate {
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
-        print("\(downloadTask.originalRequest!.url!.absoluteString) \(progress)")
+       // print("\(downloadTask.originalRequest!.url!.absoluteString) \(progress)")
         progressCallback?(progress)
     }
 }
