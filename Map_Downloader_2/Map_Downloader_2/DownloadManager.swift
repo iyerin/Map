@@ -87,7 +87,7 @@ class DownloadManager: NSObject {
     private let queue: OperationQueue = {
         let _queue = OperationQueue()
         _queue.name = "download"
-        _queue.maxConcurrentOperationCount = 1    // I'd usually use values like 3 or 4 for performance reasons, but OP asked about downloading one at a time
+        _queue.maxConcurrentOperationCount = 1    
         
         return _queue
     }()
@@ -178,7 +178,7 @@ extension DownloadOperation: URLSessionDownloadDelegate {
         
         guard let url = downloadTask.originalRequest?.url else { return }
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        print(documentsPath)
+        //print(documentsPath)
         let str:String = url.absoluteString
         var startIndex = str.index(of: ":")!
         let upperCase = CharacterSet.uppercaseLetters

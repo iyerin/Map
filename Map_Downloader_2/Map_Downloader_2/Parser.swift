@@ -49,7 +49,7 @@ class Parser: NSObject, XMLParserDelegate {
             parentName = parentsArray[level - 2]
         } else {
             parentName = ""
-        }                         ////////////// ------- remove + append
+        }
         
         if let type = attributeDict["type"] {
             if type == "srtm" || type == "hillshade" || type == "continent" {
@@ -64,7 +64,7 @@ class Parser: NSObject, XMLParserDelegate {
         
         if level >= 3 {
             let parent = regions.filter { $0.name == parentName }
-            let prefix = parent[0].prefix //////protect
+            let prefix = parent[0].prefix
             var mylink = prefix + "_" + linkName
             let first = mylink.startIndex
             let rest = String(mylink.dropFirst())
@@ -101,6 +101,6 @@ class Parser: NSObject, XMLParserDelegate {
                 parser.parse()
             }
         }
-        return regions//.sorted { $0.name < $1.name }
+        return regions
     }
 }

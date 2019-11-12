@@ -38,10 +38,13 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             for i in 0..<newRegions.count {
                 if newRegions[i].map {
                     let index = IndexPath(row: i, section: 0)
-                    guard let url = URL(string: newRegions[i].link) else { return }
-                    let operation = downloadManager.queueDownload(url)
-                    self.cell = self.myTableView.cellForRow(at: index) as? RegionsTableViewCell
-                    cell?.downloadOperation = operation
+                    if !MapsFileManager.isDownloaded(link: newRegions[i].link) {
+                        guard let url = URL(string: newRegions[i].link) else { return }
+                        let operation = downloadManager.queueDownload(url)
+                        self.cell = self.myTableView.cellForRow(at: index) as? RegionsTableViewCell
+                        cell?.downloadOperation = operation
+                    }
+                    
                 }
             }
             
@@ -121,9 +124,6 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        for region in regions {
-//            print (region.name, region.parent)
-//        }
         newRegions = regions.filter { $0.parent == regions[index].name }
         newRegions = newRegions.sorted { $0.name < $1.name }
         
@@ -182,55 +182,6 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         myTableView.reloadData()
-    }
-}
-
-    // MARK: - Download
-
-extension FirstViewController: URLSessionDownloadDelegate {
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        guard let url = downloadTask.originalRequest?.url else { return }
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        print(documentsPath)
-        let str:String = url.absoluteString
-        var startIndex = str.index(of: ":")!
-        let upperCase = CharacterSet.uppercaseLetters
-        for currentCharacter in str.unicodeScalars {
-            if upperCase.contains(currentCharacter) {
-                startIndex = str.index(of: Character(currentCharacter))!
-                break
-            }
-        }
-        let name = String(str[startIndex...])
-        let destinationURL = documentsPath.appendingPathComponent(name)
-        try? FileManager.default.removeItem(at: destinationURL)
-        do {
-            try FileManager.default.copyItem(at: location, to: destinationURL)
-        } catch let error {
-            print("Copy Error: \(error.localizedDescription)")
-        }
-        DispatchQueue.main.async() {
-            self.cell?.progress.isHidden = true
-            self.myTableView.reloadData()
-        }
-    }
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        let progress = Float(totalBytesWritten)/Float(totalBytesExpectedToWrite)
-        DispatchQueue.main.async() {
-            self.cell?.progress.progress = progress
-        }
-    }
-    
-    func download(region: Region) {
-        guard let url = URL(string: region.link) else { return }
-        let urlSession = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
-        let task = urlSession.downloadTask(with: url)
-        task.resume()
-        
-        cell?.progress.progress = 0
-        cell?.progress.isHidden = false
     }
 }
 

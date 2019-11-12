@@ -28,7 +28,6 @@ class RegionsTableViewCell: UITableViewCell {
         mapImage.image = UIImage(named: "ic_custom_show_on_map")
         isUserInteractionEnabled = true
         contentView.alpha = 1
-        //download.image = UIImage(named: "ic_custom_import")
     }
     
     private func setOperationCallbacks() {
